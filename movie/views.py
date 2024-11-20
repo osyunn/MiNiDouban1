@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
 from .forms import ReviewForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 def moviehome(request):
     searchTerm = request.GET.get('searchMovie')
@@ -28,15 +28,15 @@ def signup(request):
 
 def moviedetail(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
-    reviews = Review.objects.filter(movie=movie)
-    return render(request, 'moviedetail.html', {'movie': movie, 'reviews':reviews})
-
+    reviews=Review.objects.filter(movie=movie)
+    return render(request, 'moviedetail.html', {'movie': movie,'reviews':reviews})
 @login_required
 def createmoviereview(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
+    reviews = Review.objects.filter(movie=movie)
     if request.method == 'GET' :
         return render(request, 'createmoviereview.html' ,
-        {'form':ReviewForm , 'movie':movie})
+        {'form':ReviewForm , 'movie':movie,'reviews':reviews})
     else:
         try:
             form = ReviewForm(request.POST)
@@ -47,7 +47,6 @@ def createmoviereview(request, movie_id):
             return redirect('moviedetail',newReview.movie.id)
         except ValueError:
             return render(request,'createmoviereview.html', {'form':ReviewForm, 'error':'非法数据'})
-
 @login_required
 def updatemoviereview(request, review_id) :
     review = get_object_or_404(Review, pk=review_id, user=request.user)

@@ -15,7 +15,7 @@
                         电影资源链接
                     </a>
                     {% endif %}
-                     {% if user.is_authenticated %}
+                                          {% if user.is_authenticated %}
                     <a href="{% url 'createmoviereview' movie.id %}" class="btn btn-primary">
                         发表评论
                     </a>

@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import login_required
 from accounts.form import UserCreateForm
 from django.contrib.auth import login, logout,authenticate
 from django.contrib.auth.forms import AuthenticationForm
-from accounts.form import UserCreateForm,AuthenticateForm
 
 def signupaccount(request) :
     if request.method == 'GET':
@@ -33,6 +32,11 @@ def signupaccount(request) :
 def logoutaccount(request):
     logout(request)
     return redirect('moviehome')
+
+@login_required
+def logoutaccount(request):
+    logout(request)
+    return redirect('bookhome')
 
 def loginaccount(request) :
     if request. method == 'GET' :
